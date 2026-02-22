@@ -1,9 +1,19 @@
 from fastapi import FastAPI
 from moviebox_api import MovieAuto
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os
+import asyncio
 
 app = FastAPI()
+
+# This part is CRITICAL: It lets Lovable talk to your Render server
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/search")
 async def search(q: str):
